@@ -1,6 +1,6 @@
-package org.example.Animals.Predators;
+package org.example.organism.animals.Predators;
 
-import org.example.Animals.Animal;
+import org.example.organism.animals.Animal;
 
 public class Predators extends Animal {
     @Override

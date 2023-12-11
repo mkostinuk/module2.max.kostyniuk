@@ -1,6 +1,6 @@
-package org.example.Animals.Herbivorous;
+package org.example.organism.animals.Herbivorous;
 
-import org.example.Animals.Animal;
+import org.example.organism.animals.Animal;
 
 public class Herbivorous extends Animal {
     @Override

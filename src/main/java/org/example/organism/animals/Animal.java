@@ -1,6 +1,6 @@
-package org.example.Animals;
+package org.example.organism.animals;
 
-import org.example.Organism;
+import org.example.organism.Organism;
 
 public abstract class Animal extends Organism {
     private int weight;
