@@ -1,5 +1,6 @@
 package org.example.map;
 
+import org.example.organism.Organism;
 import org.example.organism.animals.Animal;
 import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
@@ -28,13 +29,28 @@ private FieldOfGame(){
         }
     }
 }
-public void addAnimal(){
-    // TODO: 16.12.2023
+public void addAnimal(final Animal animal, final  int height, final  int width) {
+    final Cell cell = field[height][width];
+    if(isAllowedToAdd(cell.countAllAnimals, maxAnimalsCount, cell.countExactAnimal, animal.getMaxCount())){
+        cell.animalsInCell.add(animal);
+        cell.countAllAnimals++;
+        cell.countExactAnimal++;// FIXME: 17.12.2023
     }
-    public void addPlant(){
-        // TODO: 16.12.2023  
+}
+    public void addPlant(final Plants plants, final  int height, final int width) {
+        final Cell cell = field[height][width];
+        if (isAllowedToAdd(cell.countAllPlants, maxPlantsCount)) {
+            cell.plantsInCell.add(plants);
+            cell.countAllPlants++;
+        }
     }
 
+    private boolean isAllowedToAdd(int existValue, int maxValue, int existExactValue, int maxExactValue) {
+        return existValue + 1 <= maxValue && existExactValue + 1 <= maxExactValue;
+    }
+    private boolean isAllowedToAdd(int existValue, int maxValue){
+    return existValue+1<=maxValue;
+    }
     public Cell getField(final int height, final int width) {
         return field[height][width];
     }
@@ -44,10 +60,12 @@ public void addAnimal(){
     }
 
     public class Cell {
-        private int countAnimals = 0;
-        private int countPlants = 0;
+        private int countExactAnimal=0;// FIXME: 17.12.2023
+        private int countAllAnimals = 0;
+        private int countAllPlants = 0;
         private final List<Animal> animalsInCell = new ArrayList<>();
         private final List<Plants> plantsInCell = new ArrayList<>();
+        public int getCountExactAnimal() {return countExactAnimal;}
 
         public List<Animal> getAnimalsInCell() {
             return animalsInCell;
@@ -57,14 +75,13 @@ public void addAnimal(){
             return plantsInCell;
         }
 
-        public int getCountAnimals() {
-            return countAnimals;
+        public int getCountAllAnimals() {
+            return countAllAnimals;
         }
 
-        public int getCountPlants() {
-            return countPlants;
+        public int getCountAllPlants() {
+            return countAllPlants;
         }
-
 
     }
 }
