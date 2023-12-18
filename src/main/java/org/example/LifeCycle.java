@@ -27,7 +27,9 @@ public class LifeCycle {
     }
 
     public void initAnimals() {
-        //
+       final AnimalType[] values = AnimalType.values();
+
+
     }
 
     public void initPlants() {

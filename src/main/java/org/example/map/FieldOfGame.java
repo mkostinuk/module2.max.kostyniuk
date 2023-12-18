@@ -1,12 +1,12 @@
 package org.example.map;
 
-import org.example.organism.Organism;
 import org.example.organism.animals.Animal;
 import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class FieldOfGame {
     private final int HEIGHT;
@@ -32,11 +32,10 @@ public class FieldOfGame {
 
     public void addAnimal(final Animal animal, final int height, final int width) {
         final Cell cell = field[height][width];
-        if (isAllowedToAdd(cell.countAllAnimals, maxAnimalsCount, cell.countExactAnimal, animal.getMaxCount())) {
+        if (isAllowedToAdd(cell.getCountExactAnimal(animal), animal.getMaxCount())) {
             cell.animalsInCell.add(animal);
-            cell.countAllAnimals++;
-            cell.countExactAnimal++;// FIXME: 17.12.2023
         }
+
     }
 
     public void addPlant(final Plants plants, final int height, final int width) {
@@ -47,17 +46,16 @@ public class FieldOfGame {
         }
     }
 
-    private boolean isAllowedToAdd(int existValue, int maxValue, int existExactValue, int maxExactValue) {
-        return existValue + 1 <= maxValue && existExactValue + 1 <= maxExactValue;
-    }
 
     private boolean isAllowedToAdd(int existValue, int maxValue) {
         return existValue + 1 <= maxValue;
     }
 
+
     public Cell getField(final int height, final int width) {
         return field[height][width];
     }
+
     public int getHEIGHT() {
         return HEIGHT;
     }
@@ -71,15 +69,9 @@ public class FieldOfGame {
     }
 
     public class Cell {
-        private int countExactAnimal = 0;// FIXME: 17.12.2023
-        private int countAllAnimals = 0;
         private int countAllPlants = 0;
         private final List<Animal> animalsInCell = new ArrayList<>();
         private final List<Plants> plantsInCell = new ArrayList<>();
-
-        public int getCountExactAnimal() {
-            return countExactAnimal;
-        }
 
         public List<Animal> getAnimalsInCell() {
             return animalsInCell;
@@ -89,12 +81,13 @@ public class FieldOfGame {
             return plantsInCell;
         }
 
-        public int getCountAllAnimals() {
-            return countAllAnimals;
-        }
-
         public int getCountAllPlants() {
             return countAllPlants;
+        }
+
+        public int getCountExactAnimal(Animal animal) {
+            List<Animal> animals = animalsInCell.stream().filter(s -> s.getClass().getSimpleName().equals(animal.getClass().getSimpleName())).toList();
+            return animals.size();
         }
 
     }
