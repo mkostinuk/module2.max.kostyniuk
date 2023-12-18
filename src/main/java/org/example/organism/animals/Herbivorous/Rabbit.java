@@ -21,6 +21,11 @@ public class Rabbit extends Herbivorous{
     }
 
     @Override
+    public String getName() {
+        return "Rabbit";
+    }
+
+    @Override
     public int getSaturate() {
         return ConfigLoader.getIntegerProperty(SATURATE_CONFIG_KEY);
     }

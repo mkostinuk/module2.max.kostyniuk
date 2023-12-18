@@ -6,6 +6,11 @@ public class Boar extends Herbivorous {
     private final String CONFIG_KEY="boar.";
 
     @Override
+    public String getName() {
+        return "Boar";
+    }
+
+    @Override
     public int getMaxCount() {
         return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
     }

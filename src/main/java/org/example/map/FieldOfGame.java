@@ -19,7 +19,7 @@ public class FieldOfGame {
     private FieldOfGame() {
         String CONFIG_KEY = "map.";
         HEIGHT = ConfigLoader.getIntegerProperty(CONFIG_KEY + "height");
-        WIDTH = ConfigLoader.getIntegerProperty(CONFIG_KEY + "weight");
+        WIDTH = ConfigLoader.getIntegerProperty(CONFIG_KEY + "width");
         maxAnimalsCount = ConfigLoader.getIntegerProperty(CONFIG_KEY + "animals.load");
         maxPlantsCount = ConfigLoader.getIntegerProperty(CONFIG_KEY + "plants.load");
         field = new Cell[HEIGHT][WIDTH];
@@ -30,20 +30,25 @@ public class FieldOfGame {
         }
     }
 
-    public void addAnimal(final Animal animal, final int height, final int width) {
+    public boolean addAnimal(final Animal animal, final int height, final int width) {
         final Cell cell = field[height][width];
         if (isAllowedToAdd(cell.getCountExactAnimal(animal), animal.getMaxCount())) {
             cell.animalsInCell.add(animal);
+            cell.countAllPlants++;
+            return true;
         }
-
+        return false;
     }
 
-    public void addPlant(final Plants plants, final int height, final int width) {
+    public boolean addPlant( final int height, final int width) {
+        Plants plants=new Plants();
         final Cell cell = field[height][width];
         if (isAllowedToAdd(cell.countAllPlants, maxPlantsCount)) {
             cell.plantsInCell.add(plants);
             cell.countAllPlants++;
+            return true;
         }
+        return false;
     }
 
 
@@ -70,6 +75,12 @@ public class FieldOfGame {
 
     public class Cell {
         private int countAllPlants = 0;
+        private int countAllAnimals=0;
+
+        public int getCountAllAnimals() {
+            return countAllAnimals;
+        }
+
         private final List<Animal> animalsInCell = new ArrayList<>();
         private final List<Plants> plantsInCell = new ArrayList<>();
 

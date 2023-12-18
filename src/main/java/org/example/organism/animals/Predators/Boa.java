@@ -6,6 +6,11 @@ public class Boa extends Predators {
     private final String CONFIG_KEY="boa.";
 
     @Override
+    public String getName() {
+        return "Boa";
+    }
+
+    @Override
     public int getMaxCount() {
         return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
     }

@@ -6,6 +6,16 @@ public class Eagle extends Predators {
     private final String CONFIG_KEY="eagle.";
 
     @Override
+    protected String getExactKey() {
+        return CONFIG_KEY;
+    }
+
+    @Override
+    public String getName() {
+        return "Eagle";
+    }
+
+    @Override
     public int getMaxCount() {
         return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
     }

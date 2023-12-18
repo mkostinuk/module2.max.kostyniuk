@@ -11,6 +11,11 @@ public class Fox extends Predators {
     }
 
     @Override
+    public String getName() {
+        return "Fox";
+    }
+
+    @Override
     public int getWeight() {
         return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
     }

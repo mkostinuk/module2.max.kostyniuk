@@ -11,6 +11,11 @@ public class Buffalo extends Herbivorous {
     }
 
     @Override
+    public String getName() {
+        return "Buffalo";
+    }
+
+    @Override
     public int getWeight() {
         return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
     }

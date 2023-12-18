@@ -29,4 +29,9 @@ public class Horse extends Herbivorous{
     protected String getExactKey() {
         return CONFIG_KEY;
     }
+
+    @Override
+    public String getName() {
+        return "Horse";
+    }
 }

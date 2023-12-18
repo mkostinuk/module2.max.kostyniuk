@@ -4,7 +4,12 @@ import org.example.organism.Organism;
 import org.example.settings.ConfigLoader;
 
 public class Plants extends Organism {
-  private final String CONFIG_KEY="plants.";
+    @Override
+    public String getName() {
+        return "Plants";
+    }
+
+    private final String CONFIG_KEY="plants.";
     @Override
     protected String getConfigKey() {
         return CONFIG_KEY;

@@ -29,4 +29,9 @@ public class Sheep extends Herbivorous{
     protected String getExactKey() {
         return CONFIG_KEY;
     }
+
+    @Override
+    public String getName() {
+        return "Sheep";
+    }
 }
