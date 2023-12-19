@@ -12,7 +12,6 @@ public class FieldOfGame {
     private final int HEIGHT;
     private final int WIDTH;
     private static FieldOfGame instance;
-    private final int maxAnimalsCount;
     private final int maxPlantsCount;
     private final Cell[][] field;
 
@@ -20,7 +19,6 @@ public class FieldOfGame {
         String CONFIG_KEY = "map.";
         HEIGHT = ConfigLoader.getIntegerProperty(CONFIG_KEY + "height");
         WIDTH = ConfigLoader.getIntegerProperty(CONFIG_KEY + "width");
-        maxAnimalsCount = ConfigLoader.getIntegerProperty(CONFIG_KEY + "animals.load");
         maxPlantsCount = ConfigLoader.getIntegerProperty(CONFIG_KEY + "plants.load");
         field = new Cell[HEIGHT][WIDTH];
         for (int i = 0; i < HEIGHT; i++) {
