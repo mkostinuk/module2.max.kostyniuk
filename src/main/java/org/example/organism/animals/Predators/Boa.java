@@ -3,11 +3,11 @@ package org.example.organism.animals.Predators;
 import org.example.settings.ConfigLoader;
 
 public class Boa extends Predators {
-    private final String CONFIG_KEY="boa.";
+    private final String CONFIG_KEY = "boa.";
 
     @Override
-    public String getName() {
-        return "Boa";
+    public String getUnicode() {
+        return UNICODE;
     }
 
     @Override
@@ -31,7 +31,10 @@ public class Boa extends Predators {
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
+        return CONFIG_KEY;
+    }
+    public String getCONFIG_KEY() {
         return CONFIG_KEY;
     }
 }

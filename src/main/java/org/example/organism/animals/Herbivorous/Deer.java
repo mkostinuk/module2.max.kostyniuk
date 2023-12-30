@@ -26,12 +26,13 @@ public class Deer extends Herbivorous{
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
 
     @Override
-    public String getName() {
-        return "Deer";
+    public String getUnicode() {
+        return UNICODE;
     }
+
 }

@@ -3,7 +3,7 @@ package org.example.organism.animals.Predators;
 import org.example.settings.ConfigLoader;
 
 public class Fox extends Predators {
-    private final String CONFIG_KEY="fox.";
+    private final String CONFIG_KEY = "fox.";
 
     @Override
     public int getMaxCount() {
@@ -11,8 +11,8 @@ public class Fox extends Predators {
     }
 
     @Override
-    public String getName() {
-        return "Fox";
+    public String getUnicode() {
+        return UNICODE;
     }
 
     @Override
@@ -31,7 +31,10 @@ public class Fox extends Predators {
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
+        return CONFIG_KEY;
+    }
+    public String getCONFIG_KEY() {
         return CONFIG_KEY;
     }
 }

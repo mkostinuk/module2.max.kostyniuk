@@ -21,8 +21,8 @@ public class Rabbit extends Herbivorous{
     }
 
     @Override
-    public String getName() {
-        return "Rabbit";
+    public String getUnicode() {
+        return UNICODE;
     }
 
     @Override
@@ -31,7 +31,8 @@ public class Rabbit extends Herbivorous{
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
+
 }

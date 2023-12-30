@@ -1,11 +1,14 @@
 package org.example.map;
 
+import org.example.organism.Organism;
 import org.example.organism.animals.Animal;
 import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FieldOfGame {
@@ -38,8 +41,8 @@ public class FieldOfGame {
         return false;
     }
 
-    public boolean addPlant( final int height, final int width) {
-        Plants plants=new Plants();
+    public boolean addPlant(final int height, final int width) {
+        Plants plants = new Plants();
         final Cell cell = field[height][width];
         if (isAllowedToAdd(cell.countAllPlants, maxPlantsCount)) {
             cell.plantsInCell.add(plants);
@@ -49,6 +52,28 @@ public class FieldOfGame {
         return false;
     }
 
+    public void deleteAnimal(Animal animal, int height, int width) {
+        final Cell cell = field[height][width];
+        cell.animalsInCell.remove(animal);
+        cell.countAllAnimals--;
+    }
+
+    public void deletePlants(int height, int width) {
+        final Cell cell = field[height][width];
+        cell.plantsInCell.remove(0);
+        cell.countAllPlants--;
+    }
+
+    public void multiply(Organism organism, int height, int width) {
+        final Cell cell = field[height][width];
+        if (organism instanceof Animal) {
+            cell.animalsInCell.add((Animal) organism);
+            cell.countAllAnimals++;
+        } else if (organism instanceof Plants) {
+            cell.plantsInCell.add((Plants) organism);
+            cell.countAllPlants++;
+        }
+    }
 
     private boolean isAllowedToAdd(int existValue, int maxValue) {
         return existValue + 1 <= maxValue;
@@ -73,10 +98,18 @@ public class FieldOfGame {
 
     public class Cell {
         private int countAllPlants = 0;
-        private int countAllAnimals=0;
+        private int countAllAnimals = 0;
 
         public int getCountAllAnimals() {
             return countAllAnimals;
+        }
+
+        public Map<Animal, Integer> getSaturate() {
+            Map<Animal, Integer> saturate = new HashMap<>();
+            for (int i = 0; i < getAnimalsInCell().size(); i++) {
+                saturate.put(animalsInCell.get(i), 0);
+            }
+            return saturate;
         }
 
         private final List<Animal> animalsInCell = new ArrayList<>();

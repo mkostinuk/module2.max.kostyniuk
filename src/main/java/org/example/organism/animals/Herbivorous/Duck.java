@@ -26,12 +26,13 @@ public class Duck extends Herbivorous{
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
 
     @Override
-    public String getName() {
-        return "Duck";
+    public String getUnicode() {
+        return UNICODE;
     }
+
 }

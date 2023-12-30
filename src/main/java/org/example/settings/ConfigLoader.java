@@ -21,6 +21,9 @@ public class ConfigLoader {
     public static int getIntegerProperty(final String key) {
         return Integer.parseInt(CONFIG_PROPERTIES.getProperty(key));
     }
+    public static String getStringProperty(final String key){
+        return CONFIG_PROPERTIES.getProperty(key);
+    }
 
 }
 

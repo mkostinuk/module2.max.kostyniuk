@@ -1,8 +1,10 @@
-package org.example;
+package org.example.services;
 
 import org.example.map.FieldOfGame;
 import org.example.organism.animals.Animal;
 import org.example.organism.animals.AnimalType;
+import org.example.organism.animals.Herbivorous.Herbivorous;
+import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
 
 import java.util.Random;
@@ -26,6 +28,10 @@ public class LifeCycle {
     public void startLife() {
         init();
         info();
+        while(executorService.isShutdown()){
+            executorService.submit(new AnimalCycle());
+
+        }
     }
 
     public void initAnimals() {
@@ -77,10 +83,11 @@ public class LifeCycle {
                 System.out.println("Count of Plants in Cell" + " = " + cell.getCountAllPlants());
                 for (AnimalType animalType : values) {
                     Animal animal = animalType.createAnimal();
-                    System.out.println("Count of " + animal.getName() + " = " + cell.getCountExactAnimal(animal));
+                    System.out.println("Count of " + ConfigLoader.getStringProperty(animal.getUnicode()) + " = " + cell.getCountExactAnimal(animal));
                 }
                 System.out.println("~~~~~~~~~~~~~~~~~~~~");
             }
         }
     }
+
 }

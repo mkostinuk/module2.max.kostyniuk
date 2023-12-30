@@ -6,8 +6,8 @@ public class Wolf extends Predators {
     private final String CONFIG_KEY = "wolf.";
 
     @Override
-    public String getName() {
-        return "Wolf";
+    public String getUnicode() {
+        return UNICODE;
     }
 
     @Override
@@ -26,11 +26,13 @@ public class Wolf extends Predators {
     }
 
     @Override
-    public int getSaturate() {return  ConfigLoader.getIntegerProperty(SATURATE_CONFIG_KEY);
+    public int getSaturate() {
+        return ConfigLoader.getIntegerProperty(SATURATE_CONFIG_KEY);
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
+
 }

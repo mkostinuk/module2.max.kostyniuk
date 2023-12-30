@@ -3,7 +3,7 @@ package org.example.organism.animals.Herbivorous;
 import org.example.settings.ConfigLoader;
 
 public class Bug extends Herbivorous {
-    private final String CONFIG_KEY="bug.";
+    private final String CONFIG_KEY = "bug.";
 
     @Override
     public int getMaxCount() {
@@ -26,12 +26,13 @@ public class Bug extends Herbivorous {
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
 
     @Override
-    public String getName() {
-        return "Bug";
+    public String getUnicode() {
+        return UNICODE;
     }
+
 }

@@ -26,12 +26,13 @@ public class Mouse extends Herbivorous{
     }
 
     @Override
-    protected String getExactKey() {
+    public String getExactKey() {
         return CONFIG_KEY;
     }
 
     @Override
-    public String getName() {
-        return "Mouse";
+    public String getUnicode() {
+        return UNICODE;
     }
+
 }

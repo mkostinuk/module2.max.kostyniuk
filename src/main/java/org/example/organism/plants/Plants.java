@@ -5,8 +5,8 @@ import org.example.settings.ConfigLoader;
 
 public class Plants extends Organism {
     @Override
-    public String getName() {
-        return "Plants";
+    public String getUnicode() {
+        return UNICODE;
     }
 
     private final String CONFIG_KEY="plants.";
