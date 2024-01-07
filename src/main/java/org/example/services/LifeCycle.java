@@ -3,13 +3,11 @@ package org.example.services;
 import org.example.map.FieldOfGame;
 import org.example.organism.animals.Animal;
 import org.example.organism.animals.AnimalType;
-import org.example.organism.animals.Herbivorous.Herbivorous;
-import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
-
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class LifeCycle {
     FieldOfGame field;
@@ -22,28 +20,38 @@ public class LifeCycle {
     public LifeCycle() {
         executorService = Executors.newFixedThreadPool(3);
         waitTime = ConfigLoader.getIntegerProperty(CONFIG_KEY + "wait-time");
-        field =FieldOfGame.getInstance();
+        field = FieldOfGame.getInstance();
     }
 
     public void startLife() {
+        System.out.println("Day - 0");
+        System.out.println("______~~_______");
         init();
         info();
-        while(executorService.isShutdown()){
+        for (int i = 1; i <366 ; i++) {
+            System.out.println("Day - " + i);
             executorService.submit(new AnimalCycle());
-
+            executorService.submit(new PlantCycle());
+            System.out.println("______~~_______");
+            info();
+            try {
+                TimeUnit.MILLISECONDS.sleep(waitTime);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public void initAnimals() {
         for (AnimalType type : values) {
-            int countOFAnimals=ConfigLoader.getIntegerProperty(CONFIG_KEY+ "init-count-animals");
+            int countOFAnimals = ConfigLoader.getIntegerProperty(CONFIG_KEY + "init-count-animals");
             initOrganism(countOFAnimals, type);
         }
 
     }
 
     public void initPlants() {
-        int countOfPlants = ConfigLoader.getIntegerProperty(CONFIG_KEY+ "init-count-plants");
+        int countOfPlants = ConfigLoader.getIntegerProperty(CONFIG_KEY + "init-count-plants");
         initOrganism(countOfPlants, null);
     }
 
@@ -89,5 +97,6 @@ public class LifeCycle {
             }
         }
     }
+
 
 }

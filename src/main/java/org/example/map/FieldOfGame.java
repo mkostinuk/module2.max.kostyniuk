@@ -35,7 +35,7 @@ public class FieldOfGame {
         final Cell cell = field[height][width];
         if (isAllowedToAdd(cell.getCountExactAnimal(animal), animal.getMaxCount())) {
             cell.animalsInCell.add(animal);
-            cell.countAllPlants++;
+            cell.countAllAnimals++;
             return true;
         }
         return false;
@@ -65,13 +65,10 @@ public class FieldOfGame {
     }
 
     public void multiply(Organism organism, int height, int width) {
-        final Cell cell = field[height][width];
         if (organism instanceof Animal) {
-            cell.animalsInCell.add((Animal) organism);
-            cell.countAllAnimals++;
+                addAnimal((Animal) organism, height, width);
         } else if (organism instanceof Plants) {
-            cell.plantsInCell.add((Plants) organism);
-            cell.countAllPlants++;
+                addPlant(height, width);
         }
     }
 
@@ -93,7 +90,10 @@ public class FieldOfGame {
     }
 
     public static FieldOfGame getInstance() {
-        return instance == null ? new FieldOfGame() : instance;
+        if(instance==null) {
+            instance=new FieldOfGame();
+        }
+        return instance;
     }
 
     public class Cell {
@@ -119,9 +119,6 @@ public class FieldOfGame {
             return animalsInCell;
         }
 
-        public List<Plants> getPlantsInCell() {
-            return plantsInCell;
-        }
 
         public int getCountAllPlants() {
             return countAllPlants;
