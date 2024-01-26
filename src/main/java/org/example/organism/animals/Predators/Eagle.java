@@ -1,28 +1,31 @@
 package org.example.organism.animals.Predators;
 
+import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
 public class Eagle extends Predators {
-    private final String CONFIG_KEY = "eagle.";
-
+    @Override
+    public AnimalType getType() {
+        return AnimalType.EAGLE;
+    }
     @Override
     public String getExactKey() {
-        return CONFIG_KEY;
+        return "eagle.";
     }
 
     @Override
     public String getUnicode() {
-        return UNICODE;
+        return unicode;
     }
 
     @Override
     public int getMaxCount() {
-        return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(maxCountConfigKey);
     }
 
     @Override
     public int getWeight() {
-        return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(weightConfigKey);
     }
 
     @Override
@@ -34,7 +37,5 @@ public class Eagle extends Predators {
     public int getSaturate() {
         return ConfigLoader.getIntegerProperty(SATURATE_CONFIG_KEY);
     }
-    public String getCONFIG_KEY() {
-        return CONFIG_KEY;
-    }
+
 }

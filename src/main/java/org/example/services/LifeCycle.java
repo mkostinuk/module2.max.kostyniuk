@@ -1,21 +1,26 @@
 package org.example.services;
 
+import lombok.SneakyThrows;
 import org.example.map.FieldOfGame;
 import org.example.organism.animals.Animal;
 import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
+
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class LifeCycle {
-    FieldOfGame field;
+
+    private final FieldOfGame field;
     private final String CONFIG_KEY = "lifecycle.";
     private final ExecutorService executorService;
     private final int waitTime;
-    final AnimalType[] values = AnimalType.values();
-    private final static Random random = new Random();
+    private final AnimalType[] values = AnimalType.values();
+    private final static Random RANDOM = new Random();
+    private final static LoggerLife LOGGER = new LoggerLife();
+
 
     public LifeCycle() {
         executorService = Executors.newFixedThreadPool(3);
@@ -23,23 +28,17 @@ public class LifeCycle {
         field = FieldOfGame.getInstance();
     }
 
+    @SneakyThrows
     public void startLife() {
-        System.out.println("Day - 0");
-        System.out.println("______~~_______");
         init();
-        info();
-        for (int i = 1; i <366 ; i++) {
-            System.out.println("Day - " + i);
-            executorService.submit(new AnimalCycle());
-            executorService.submit(new PlantCycle());
-            System.out.println("______~~_______");
-            info();
-            try {
-                TimeUnit.MILLISECONDS.sleep(waitTime);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        LOGGER.log(0);
+        TimeUnit.MILLISECONDS.sleep(waitTime);
+        executorService.submit(new AnimalCycle());
+        executorService.submit(new PlantCycle());
+        executorService.shutdown(
+
+        );
+        LOGGER.log(1);
     }
 
     public void initAnimals() {
@@ -57,17 +56,18 @@ public class LifeCycle {
 
     public void initOrganism(int baseCount, AnimalType type) {
         int count = 0;
-        int height = field.getHEIGHT();
-        int width = field.getWIDTH();
+        int height = field.getHeight();
+        int width = field.getWidth();
         do {
-            final int tmpHeight = random.nextInt(0, height);
-            final int tmpWidth = random.nextInt(0, width);
+            final int tmpHeight = RANDOM.nextInt(0, height);
+            final int tmpWidth = RANDOM.nextInt(0, width);
+            FieldOfGame.Cell cell = field.getField(tmpHeight, tmpWidth);
             boolean isAdd;
             if (type != null) {
                 final Animal animal = type.createAnimal();
-                isAdd = field.addAnimal(animal, tmpHeight, tmpWidth);
+                isAdd = field.addAnimal(animal, cell);
             } else {
-                isAdd = field.addPlant(tmpHeight, tmpWidth);
+                isAdd = field.addPlant(cell);
             }
             if (isAdd) {
                 count++;
@@ -80,22 +80,6 @@ public class LifeCycle {
     public void init() {
         initAnimals();
         initPlants();
-    }
-
-    public void info() {
-        for (int i = 0; i < field.getHEIGHT(); i++) {
-            for (int j = 0; j < field.getWIDTH(); j++) {
-                final FieldOfGame.Cell cell = field.getField(i, j);
-                System.out.println("Cell number: " + "[" + i + "]" + "[" + j + "]");
-                System.out.println("Count of animals in Cell" + " = " + cell.getCountAllAnimals());
-                System.out.println("Count of Plants in Cell" + " = " + cell.getCountAllPlants());
-                for (AnimalType animalType : values) {
-                    Animal animal = animalType.createAnimal();
-                    System.out.println("Count of " + ConfigLoader.getStringProperty(animal.getUnicode()) + " = " + cell.getCountExactAnimal(animal));
-                }
-                System.out.println("~~~~~~~~~~~~~~~~~~~~");
-            }
-        }
     }
 
 

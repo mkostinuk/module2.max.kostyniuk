@@ -5,12 +5,13 @@ import org.example.organism.animals.Predators.*;
 
 public enum AnimalType {
     /*Predators*/
-    BEAR(Bear.class),
+    BEAR(Bear.class),//todo link unicode
     BOA(Boa.class),
     EAGLE(Eagle.class),
     FOX(Fox.class),
     WOLF(Wolf.class),
     /*Herbivorous*/
+
     BOAR(Boar.class),
     BUFFALO(Buffalo.class),
     BUG(Bug.class),
@@ -37,4 +38,5 @@ public enum AnimalType {
         }
 
     }
+
 }
