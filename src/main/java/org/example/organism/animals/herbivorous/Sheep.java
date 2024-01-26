@@ -1,13 +1,15 @@
-package org.example.organism.animals.Herbivorous;
+package org.example.organism.animals.herbivorous;
 
 import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
-public class Duck extends Herbivorous{
+public class Sheep extends Herbivorous {
+
     @Override
     public AnimalType getType() {
-        return AnimalType.DUCK;
+        return AnimalType.SHEEP;
     }
+
     @Override
     public int getMaxCount() {
         return ConfigLoader.getIntegerProperty(maxCountConfigKey);
@@ -30,7 +32,7 @@ public class Duck extends Herbivorous{
 
     @Override
     public String getExactKey() {
-        return "duck.";
+        return "sheep.";
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.example.settings;
 
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +9,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class ConfigLoader {
-    private static final Logger logger= LogManager.getLogger(ConfigLoader.class);
+    private static final Logger logger = LogManager.getLogger(ConfigLoader.class);
     private static final String FILE_CONFIG = "app.properties";
 
     private static final Properties CONFIG_PROPERTIES = new Properties();
@@ -20,6 +19,7 @@ public class ConfigLoader {
             CONFIG_PROPERTIES.load(input);
         } catch (IOException ex) {
             logger.error("Error with reading property {}", ex.toString());
+            throw new RuntimeException();
 
         }
     }

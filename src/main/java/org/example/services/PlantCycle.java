@@ -8,7 +8,7 @@ public class PlantCycle implements Runnable {
     private final Random random = new Random();
     private final FieldOfGame fieldOfGame = FieldOfGame.getInstance();
 
-    @Override
+
     public void run() {
         for (int i = 0; i < fieldOfGame.getHeight(); i++) {
             for (int j = 0; j < fieldOfGame.getWidth(); j++) {
@@ -18,7 +18,7 @@ public class PlantCycle implements Runnable {
     }
 
     private void multiply(FieldOfGame.Cell cell) {
-        if (random.nextInt(100) >= 50) {
+        if (random.nextInt(100) >= 70) {
             for (int i = 0; i < cell.getCountAllPlants(); i++) {
                 fieldOfGame.multiply(cell);
             }

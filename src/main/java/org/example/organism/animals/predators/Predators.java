@@ -1,9 +1,8 @@
-package org.example.organism.animals.Predators;
+package org.example.organism.animals.predators;
 
 import org.example.organism.animals.Animal;
 
 import org.example.organism.animals.TypeOfAnimals;
-
 
 
 public abstract class Predators extends Animal {

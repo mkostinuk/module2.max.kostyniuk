@@ -1,13 +1,14 @@
-package org.example.organism.animals.Herbivorous;
+package org.example.organism.animals.predators;
 
 import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
-public class Boar extends Herbivorous {
+public class Boa extends Predators {
     @Override
     public AnimalType getType() {
-        return AnimalType.BOAR;
+        return AnimalType.BOA;
     }
+
     @Override
     public String getUnicode() {
         return unicode;
@@ -35,7 +36,7 @@ public class Boar extends Herbivorous {
 
     @Override
     public String getExactKey() {
-        return "boar.";
+        return "boa.";
     }
 
 }

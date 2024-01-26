@@ -1,4 +1,4 @@
-package org.example.organism.animals.Herbivorous;
+package org.example.organism.animals.herbivorous;
 
 import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
@@ -8,6 +8,7 @@ public class Bug extends Herbivorous {
     public AnimalType getType() {
         return AnimalType.BUG;
     }
+
     @Override
     public int getMaxCount() {
         return ConfigLoader.getIntegerProperty(maxCountConfigKey);

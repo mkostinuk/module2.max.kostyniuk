@@ -55,11 +55,12 @@ public class FieldOfGame {
 
     }
 
-    public void deletePlants(Cell cell) {
+    public boolean deletePlants(Cell cell) {
         if (cell.getCountAllPlants() > 0) {
             cell.plantsInCell.remove(0);
+            return true;
         }
-
+        return false;
     }
 
     public void multiply(Animal animal, Cell cell) {

@@ -14,18 +14,22 @@ import java.util.concurrent.TimeUnit;
 public class LifeCycle {
 
     private final FieldOfGame field;
-    private final String CONFIG_KEY = "lifecycle.";
+    private final String configKey;
     private final ExecutorService executorService;
     private final int waitTime;
-    private final AnimalType[] values = AnimalType.values();
+    private final AnimalType[] values;
     private final static Random RANDOM = new Random();
     private final static LoggerLife LOGGER = new LoggerLife();
+    private final int days;
 
 
     public LifeCycle() {
-        executorService = Executors.newFixedThreadPool(3);
-        waitTime = ConfigLoader.getIntegerProperty(CONFIG_KEY + "wait-time");
+        values = AnimalType.values();
+        configKey = "lifecycle.";
+        executorService = Executors.newFixedThreadPool(2);
+        waitTime = ConfigLoader.getIntegerProperty(configKey + "wait-time");
         field = FieldOfGame.getInstance();
+        days = ConfigLoader.getIntegerProperty(configKey + "days");
     }
 
     @SneakyThrows
@@ -33,24 +37,44 @@ public class LifeCycle {
         init();
         LOGGER.log(0);
         TimeUnit.MILLISECONDS.sleep(waitTime);
-        executorService.submit(new AnimalCycle());
-        executorService.submit(new PlantCycle());
-        executorService.shutdown(
+        for (int i = 1; i <= days; i++) {
+            if (extinction()) {
+                LOGGER.unExpectedEnd();
+                return;
+            }
+            executorService.submit(new AnimalCycle());
+            executorService.submit(new PlantCycle());
+            LOGGER.log(i);
+            TimeUnit.MILLISECONDS.sleep(waitTime);
+        }
+        executorService.shutdown();
+        if (executorService.isShutdown()) {
+            LOGGER.theEnd();
+        }
+    }
 
-        );
-        LOGGER.log(1);
+    private boolean extinction() {
+        int k = 0;
+        for (int i = 0; i < field.getHeight(); i++) {
+            for (int j = 0; j < field.getWidth(); j++) {
+                if (field.getField(i, j).getAnimalsInCell().isEmpty()) {
+                    k++;
+                }
+            }
+        }
+        return k >= 5;
     }
 
     public void initAnimals() {
         for (AnimalType type : values) {
-            int countOFAnimals = ConfigLoader.getIntegerProperty(CONFIG_KEY + "init-count-animals");
+            int countOFAnimals = ConfigLoader.getIntegerProperty(configKey + "init-count-animals");
             initOrganism(countOFAnimals, type);
         }
 
     }
 
     public void initPlants() {
-        int countOfPlants = ConfigLoader.getIntegerProperty(CONFIG_KEY + "init-count-plants");
+        int countOfPlants = ConfigLoader.getIntegerProperty(configKey + "init-count-plants");
         initOrganism(countOfPlants, null);
     }
 

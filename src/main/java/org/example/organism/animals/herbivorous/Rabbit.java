@@ -1,18 +1,12 @@
-package org.example.organism.animals.Predators;
+package org.example.organism.animals.herbivorous;
 
 import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
-public class Wolf extends Predators {
-
+public class Rabbit extends Herbivorous {
     @Override
     public AnimalType getType() {
-        return AnimalType.WOLF;
-    }
-
-    @Override
-    public String getUnicode() {
-        return unicode;
+        return AnimalType.RABBIT;
     }
 
     @Override
@@ -31,13 +25,18 @@ public class Wolf extends Predators {
     }
 
     @Override
+    public String getUnicode() {
+        return unicode;
+    }
+
+    @Override
     public int getSaturate() {
         return ConfigLoader.getIntegerProperty(SATURATE_CONFIG_KEY);
     }
 
     @Override
     public String getExactKey() {
-        return "wolf.";
+        return "rabbit.";
     }
 
 }

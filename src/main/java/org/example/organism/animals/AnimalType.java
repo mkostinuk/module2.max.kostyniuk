@@ -1,11 +1,11 @@
 package org.example.organism.animals;
 
-import org.example.organism.animals.Herbivorous.*;
-import org.example.organism.animals.Predators.*;
+import org.example.organism.animals.herbivorous.*;
+import org.example.organism.animals.predators.*;
 
 public enum AnimalType {
     /*Predators*/
-    BEAR(Bear.class),//todo link unicode
+    BEAR(Bear.class),
     BOA(Boa.class),
     EAGLE(Eagle.class),
     FOX(Fox.class),

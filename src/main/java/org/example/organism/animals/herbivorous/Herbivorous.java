@@ -1,4 +1,4 @@
-package org.example.organism.animals.Herbivorous;
+package org.example.organism.animals.herbivorous;
 
 import org.example.organism.animals.Animal;
 import org.example.organism.animals.TypeOfAnimals;
