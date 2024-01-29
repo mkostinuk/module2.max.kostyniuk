@@ -1,23 +1,27 @@
-package org.example.organism.animals.Herbivorous;
+package org.example.organism.animals.herbivorous;
 
+import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
 public class Buffalo extends Herbivorous {
-    private final String CONFIG_KEY="buffalo.";
-
     @Override
-    public int getMaxCount() {
-        return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
+    public AnimalType getType() {
+        return AnimalType.BUFFALO;
     }
 
     @Override
-    public String getName() {
-        return "Buffalo";
+    public int getMaxCount() {
+        return ConfigLoader.getIntegerProperty(maxCountConfigKey);
+    }
+
+    @Override
+    public String getUnicode() {
+        return unicode;
     }
 
     @Override
     public int getWeight() {
-        return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(weightConfigKey);
     }
 
     @Override
@@ -31,7 +35,8 @@ public class Buffalo extends Herbivorous {
     }
 
     @Override
-    protected String getExactKey() {
-        return CONFIG_KEY;
+    public String getExactKey() {
+        return "buffalo.";
     }
+
 }

@@ -1,54 +1,78 @@
 package org.example.map;
 
+
+import lombok.Getter;
 import org.example.organism.animals.Animal;
+import org.example.organism.animals.AnimalType;
 import org.example.organism.plants.Plants;
 import org.example.settings.ConfigLoader;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 public class FieldOfGame {
-    private final int HEIGHT;
-    private final int WIDTH;
+    @Getter
+    private final int height;
+    @Getter
+    private final int width;
     private static FieldOfGame instance;
     private final int maxPlantsCount;
     private final Cell[][] field;
 
     private FieldOfGame() {
         String CONFIG_KEY = "map.";
-        HEIGHT = ConfigLoader.getIntegerProperty(CONFIG_KEY + "height");
-        WIDTH = ConfigLoader.getIntegerProperty(CONFIG_KEY + "width");
+        height = ConfigLoader.getIntegerProperty(CONFIG_KEY + "height");
+        width = ConfigLoader.getIntegerProperty(CONFIG_KEY + "width");
         maxPlantsCount = ConfigLoader.getIntegerProperty(CONFIG_KEY + "plants.load");
-        field = new Cell[HEIGHT][WIDTH];
-        for (int i = 0; i < HEIGHT; i++) {
-            for (int j = 0; j < WIDTH; j++) {
+        field = new Cell[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 field[i][j] = new Cell();
             }
         }
     }
 
-    public boolean addAnimal(final Animal animal, final int height, final int width) {
-        final Cell cell = field[height][width];
-        if (isAllowedToAdd(cell.getCountExactAnimal(animal), animal.getMaxCount())) {
+    public boolean addAnimal(final Animal animal, Cell cell) {
+        if (isAllowedToAdd(cell.getCountExactAnimal(animal.getType()), animal.getMaxCount())) {
             cell.animalsInCell.add(animal);
-            cell.countAllPlants++;
             return true;
         }
         return false;
     }
 
-    public boolean addPlant( final int height, final int width) {
-        Plants plants=new Plants();
-        final Cell cell = field[height][width];
-        if (isAllowedToAdd(cell.countAllPlants, maxPlantsCount)) {
+    public boolean addPlant(Cell cell) {
+        Plants plants = new Plants();
+        if (isAllowedToAdd(cell.getCountAllPlants(), maxPlantsCount)) {
             cell.plantsInCell.add(plants);
-            cell.countAllPlants++;
+
             return true;
         }
         return false;
     }
 
+    public void deleteAnimal(Animal animal, Cell cell) {
+        cell.animalsInCell.remove(animal);
+
+    }
+
+    public boolean deletePlants(Cell cell) {
+        if (cell.getCountAllPlants() > 0) {
+            cell.plantsInCell.remove(0);
+            return true;
+        }
+        return false;
+    }
+
+    public void multiply(Animal animal, Cell cell) {
+        addAnimal(animal, cell);
+    }
+
+    public void multiply(Cell cell) {
+        for (int i = 0; i < cell.getCountAllPlants(); i++) {
+            addPlant(cell);
+        }
+
+    }
 
     private boolean isAllowedToAdd(int existValue, int maxValue) {
         return existValue + 1 <= maxValue;
@@ -59,44 +83,30 @@ public class FieldOfGame {
         return field[height][width];
     }
 
-    public int getHEIGHT() {
-        return HEIGHT;
-    }
-
-    public int getWIDTH() {
-        return WIDTH;
-    }
 
     public static FieldOfGame getInstance() {
-        return instance == null ? new FieldOfGame() : instance;
+        if (instance == null) {
+            instance = new FieldOfGame();
+        }
+        return instance;
     }
 
-    public class Cell {
-        private int countAllPlants = 0;
-        private int countAllAnimals=0;
+    public static class Cell {
 
         public int getCountAllAnimals() {
-            return countAllAnimals;
+            return animalsInCell.size();
         }
 
+        @Getter
         private final List<Animal> animalsInCell = new ArrayList<>();
         private final List<Plants> plantsInCell = new ArrayList<>();
 
-        public List<Animal> getAnimalsInCell() {
-            return animalsInCell;
-        }
-
-        public List<Plants> getPlantsInCell() {
-            return plantsInCell;
-        }
-
         public int getCountAllPlants() {
-            return countAllPlants;
+            return plantsInCell.size();
         }
 
-        public int getCountExactAnimal(Animal animal) {
-            List<Animal> animals = animalsInCell.stream().filter(s -> s.getClass().getSimpleName().equals(animal.getClass().getSimpleName())).toList();
-            return animals.size();
+        public int getCountExactAnimal(AnimalType animalType) {
+            return (int) animalsInCell.stream().filter(s -> s.getType() == animalType).count();
         }
 
     }

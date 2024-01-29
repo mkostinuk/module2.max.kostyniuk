@@ -1,23 +1,27 @@
-package org.example.organism.animals.Predators;
+package org.example.organism.animals.predators;
 
+import org.example.organism.animals.AnimalType;
 import org.example.settings.ConfigLoader;
 
 public class Fox extends Predators {
-    private final String CONFIG_KEY="fox.";
-
     @Override
-    public int getMaxCount() {
-        return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
+    public AnimalType getType() {
+        return AnimalType.FOX;
     }
 
     @Override
-    public String getName() {
-        return "Fox";
+    public int getMaxCount() {
+        return ConfigLoader.getIntegerProperty(maxCountConfigKey);
+    }
+
+    @Override
+    public String getUnicode() {
+        return unicode;
     }
 
     @Override
     public int getWeight() {
-        return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(weightConfigKey);
     }
 
     @Override
@@ -31,7 +35,8 @@ public class Fox extends Predators {
     }
 
     @Override
-    protected String getExactKey() {
-        return CONFIG_KEY;
+    public String getExactKey() {
+        return "fox.";
     }
+
 }

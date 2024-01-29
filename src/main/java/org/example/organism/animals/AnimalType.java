@@ -1,8 +1,7 @@
 package org.example.organism.animals;
 
-import org.example.organism.animals.Herbivorous.*;
-import org.example.organism.animals.Predators.*;
-import org.example.organism.plants.Plants;
+import org.example.organism.animals.herbivorous.*;
+import org.example.organism.animals.predators.*;
 
 public enum AnimalType {
     /*Predators*/
@@ -12,7 +11,8 @@ public enum AnimalType {
     FOX(Fox.class),
     WOLF(Wolf.class),
     /*Herbivorous*/
-    BOAR(Boa.class),
+
+    BOAR(Boar.class),
     BUFFALO(Buffalo.class),
     BUG(Bug.class),
     DEER(Deer.class),
@@ -38,4 +38,5 @@ public enum AnimalType {
         }
 
     }
+
 }

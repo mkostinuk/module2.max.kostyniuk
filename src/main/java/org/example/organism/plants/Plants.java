@@ -5,23 +5,22 @@ import org.example.settings.ConfigLoader;
 
 public class Plants extends Organism {
     @Override
-    public String getName() {
-        return "Plants";
+    public String getUnicode() {
+        return unicode;
     }
 
-    private final String CONFIG_KEY="plants.";
     @Override
     protected String getConfigKey() {
-        return CONFIG_KEY;
+        return "plants.";
     }
 
     @Override
     public int getMaxCount() {
-        return ConfigLoader.getIntegerProperty(MAX_COUNT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(maxCountConfigKey);
     }
 
     @Override
     public int getWeight() {
-        return ConfigLoader.getIntegerProperty(WEIGHT_CONFIG_KEY);
+        return ConfigLoader.getIntegerProperty(weightConfigKey);
     }
 }
